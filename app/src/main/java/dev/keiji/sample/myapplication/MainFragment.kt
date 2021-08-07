@@ -1,4 +1,4 @@
-package dev.keiji.sample.myapplication
+package io.keiji.sample.myapplication
 
 import android.os.Bundle
 import android.view.View
