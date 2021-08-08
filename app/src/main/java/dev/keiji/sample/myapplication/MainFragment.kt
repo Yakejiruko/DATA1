@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.FragmentMainBinding
 
 class MainFragment : Fragment(R.layout.fragment_main) {
