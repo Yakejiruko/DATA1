@@ -1,5 +1,9 @@
 package io.keiji.sample.myapplication
 
+import kotlinx.coroutine.CoroutinScope
+import kotlinx.coroutine.Dispatchers
+import kotlinx.coroutine.launch
+
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -16,6 +20,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         private const val API_BASE_URL = "http://androidbook2020.keiji.io"
     }
     private val retrofit = Retrofit.Builder()
+
         .baseUrl(API_BASE_URL)
         .build()
     private val api = retrofit.create(MastodonApi::class.java)
@@ -26,9 +31,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding = DataBindingUtil.bind(view)
         binding?.button?.setOnClickListener{
             binding?.button?.text="clicked"
-            val response = api.fetchPublicTimeline()
-                .execute().body()?.string()
-            Log.d(TAG.response)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = api.fetchPublicTimeline().string()
+                Log.d(TAG, response)
+                binding?.button?.text = response
+            }
 
         }
     }
