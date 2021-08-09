@@ -1,8 +1,8 @@
 package io.keiji.sample.myapplication
 
-import kotlinx.coroutine.CoroutinScope
-import kotlinx.coroutine.Dispatchers
-import kotlinx.coroutine.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 import android.os.Bundle
 import android.view.View
@@ -12,6 +12,7 @@ import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.FragmentMainBinding
 import retrofit2.Retrofit
 import android.util.Log
+import dev.keiji.sample.myapplication.MastodonApi
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
