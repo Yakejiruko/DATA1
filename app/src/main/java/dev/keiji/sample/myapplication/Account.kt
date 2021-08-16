@@ -8,3 +8,4 @@ data class Account (
     @Json(name = "display_name") val displayName: String,
     val url:String
 )
+

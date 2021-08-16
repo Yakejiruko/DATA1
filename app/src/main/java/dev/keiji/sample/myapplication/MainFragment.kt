@@ -1,8 +1,7 @@
-package io.keiji.sample.myapplication
+package dev.keiji.sample.myapplication
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 import android.os.Bundle
@@ -15,8 +14,11 @@ import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.FragmentMainBinding
 import retrofit2.Retrofit
 import android.util.Log
+import com.squareup.moshi.Moshi
 import dev.keiji.sample.mastodonclient.Toot
 import dev.keiji.sample.myapplication.MastodonApi
+import kotlinx.coroutines.launch
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -63,6 +65,6 @@ private val moshi = Moshi.Builder()
         binding.button.text = accountNameList.joinToString("/n")
     }
 
-    }
-    )
+
+
 }
