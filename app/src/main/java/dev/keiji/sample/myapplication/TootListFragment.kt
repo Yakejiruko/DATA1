@@ -46,7 +46,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     private lateinit var adapter: TootListAdapter
-    private lateinit var lauoutManager: LinearLayoutManager
+    private lateinit var layoutManager: LinearLayoutManager
 
     private val tootList = ArrayList<Toot>()
 
@@ -62,13 +62,13 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         binding = bindingData ?: return
 
         bindingData.recyclerView.also {
-            it.layoutManager = lauoutManager
+            it.layoutManager = layoutManager
             it.adapter = adapter
         }
 
         coroutineScope.launch {
-            val tootList = api.fetchPublicTimeline()
-            tootList.addAll(tootList)
+            val tootListResponse = api.fetchPublicTimeline()
+            tootList.addAll(tootListResponse)
             reloadTootList()
         }
     }

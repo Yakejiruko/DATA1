@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import dev.keiji.sample.mastodonclient.Toot
-import dev.keiji.sample.mastodonclient.databinding.ListItemTootBinding
 import dev.keiji.sample.myapplication.databinding.ListItemTootBinding
 
 class TootListAdapter(
