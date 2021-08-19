@@ -19,7 +19,6 @@ import dev.keiji.sample.mastodonclient.Toot
 import com.squareup.moshi.Json
 import dev.keiji.sample.myapplication.R
 import android.util.Log
-import com.squareup.moshi.Moshi
 import dev.keiji.sample.myapplication.MastodonApi
 import dev.keiji.sample.myapplication.databinding.FragmentTootListBinding
 
