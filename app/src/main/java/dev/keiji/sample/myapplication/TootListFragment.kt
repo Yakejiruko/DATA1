@@ -90,6 +90,10 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             it.adapter = adapter
             it.addOnScrollListener(loadNextScrollListner)
         }
+        bindingData.swipeRefreshLayout.setOnRefreshListener {
+            tootList.clear()
+            loadNext()
+        }
 
         loadNext()
     }
@@ -99,9 +103,17 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         binding?.unbind()
     }
 
+    private suspend fun showProgress() = withContext(Dispatchers.Main) {
+        binding?.swipeRefreshLayout?.isRefreshing = true
+    }
+    private suspend fun dismissProgress() = withContext(Dispatchers.Main) {
+        binding?.swipeRefreshLayout?.isRefreshing = false
+    }
+
     private fun loadNext() {
         coroutineScope.launch{
             isLoading.set(true)
+            showProgress()
 
             val tootListResponse = api.fetchPublicTimeline(
                 maxId = tootList.lastOrNull() ?.id,
@@ -111,8 +123,9 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             tootList.addAll(tootListResponse.filter { !it.sensitive})
             reloadTootList()
 
-            isLoading.set(false)
             hasNext.set(tootListResponse.isNotEmpty())
+            isLoading.set(false)
+            dismissProgress()
         }
     }
 
