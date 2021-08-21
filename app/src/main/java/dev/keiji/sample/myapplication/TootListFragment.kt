@@ -91,7 +91,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             it.addOnScrollListener(loadNextScrollListner)
         }
 
-        laodNext()
+        loadNext()
     }
 
     override fun onDestroyView() {
