@@ -1,9 +1,12 @@
 package dev.keiji.sample.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.moshi.Moshi
@@ -16,15 +19,14 @@ import dev.keiji.sample.mastodonclient.Toot
 
 import com.squareup.moshi.Json
 import dev.keiji.sample.myapplication.R
-import android.util.Log
 import dev.keiji.sample.myapplication.MastodonApi
 import dev.keiji.sample.myapplication.databinding.FragmentTootListBinding
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list) {
-
-    private lateinit var layoutManager: LinearLayoutManager
 
     private var isLoading = AtomicBoolean()
     private var hasNext = AtomicBoolean() . apply{ set(true) }
@@ -66,8 +68,6 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
     private val api = retrofit.create(MastodonApi::class.java)
-
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     private lateinit var adapter: TootListAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -111,21 +111,29 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     }
 
     private fun loadNext() {
-        coroutineScope.launch{
+        lifecycleScope.launch{
             isLoading.set(true)
             showProgress()
 
-            val tootListResponse = api.fetchPublicTimeline(
-                maxId = tootList.lastOrNull() ?.id,
-                onlyMedia = true
-            )
+            val tootListResponse = withContext(Dispatchers.IO) {
+                api.fetchPublicTimeline(
+                    maxId = tootList.lastOrNull()?.id,
+                    onlyMedia = true
+                    )
+            }
+
+            Log.d(TAG, "fetchPublicTimeLine")
 
             tootList.addAll(tootListResponse.filter { !it.sensitive})
+            Log.d(TAG, "andAll")
+
             reloadTootList()
+            Log.d(TAG, "reloadTootList")
 
             hasNext.set(tootListResponse.isNotEmpty())
             isLoading.set(false)
             dismissProgress()
+            Log.d(TAG, "dismissProgress")
         }
     }
 
