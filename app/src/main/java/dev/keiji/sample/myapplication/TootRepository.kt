@@ -15,13 +15,18 @@ class TootRepository (
         .add(KotlinJsonAdapterFactory())
         .build()
 
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(instanceUrl)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
     private val api = retrofit.create(MastodonApi::class.java)
 
     suspend fun fetchPubliTimeLine(
         maxId: String?,
         onlyMedia: Boolean
     ) = withContext(Dispatchers.IO) {
-        api.fetchPubliTimeLine(
+        api.fetchPublicTimeline(
             maxId = maxId,
             onlyMedia = onlyMedia
         )
