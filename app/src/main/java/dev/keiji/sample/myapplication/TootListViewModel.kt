@@ -18,7 +18,7 @@ class TootListViewModel(
     private val tootRepository = TootRepository(instanceUrl)
     val isLoading = MutableLiveData<Boolean>()
     var hasNext = true
-    val TootList = MutableLiveData<ArrayList<Toot>>()
+    val tootList = MutableLiveData<ArrayList<Toot>>()
 
     fun clear() {
         val tootListSnapshot = tootList.value ?: return
