@@ -56,7 +56,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             ) {
                 viewModel.loadNext()
             }
-            isLoading.observe(viewLifecycleOwner, Observer {
+            viewModel.isLoading.observe(viewLifecycleOwner, Observer {
                 binding?.swipeRefreshLayout?.isRefreshing = it
             })
         }
@@ -99,35 +99,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
             adapter.notifyDataSetChanged()
         })
 
-        viewModel.loadNext()
+        viewLifecycleOwner.lifecycle.addObserver(viewModel)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding?.unbind()
-    }
-
-    private fun loadNext() {
-        lifecycleScope.launch {
-            isLoading.postValue(true)
-
-            val tootListSnapshot = tootList.value ?: ArrayList()
-
-            val tootListResponse = tootRepository.fetchPubliTimeLine(
-                maxId = tootListSnapshot.lastOrNull()?.id,
-                onlyMedia = true
-            )
-
-            Log.d(TAG, "fetchPublicTimeLine")
-
-            tootListSnapshot.addAll(tootListResponse.filter { !it.sensitive })
-            Log.d(TAG, "andAll")
-
-            tootList.postValue(tootListSnapshot)
-
-            hasNext.set(tootListResponse.isNotEmpty())
-            isLoading.postValue(false)
-            Log.d(TAG, "dismissProgress")
-        }
     }
 }
