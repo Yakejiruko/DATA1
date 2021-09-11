@@ -5,13 +5,13 @@ import android.net.wifi.hotspot2.pps.Credential
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UserCredentialRepository (
+class UserCredentialRepository(
     private val application: Application
 ) {
     suspend fun find(
         instanceUrl: String,
         username: String
-    ) : Credential.UserCredential? = withContext(Dispatchers.IO) {
+    ): Credential.UserCredential? = withContext(Dispatchers.IO) {
 
         return@withContext UserCredential(
             BuildConfig.INSTANCE_URL,
