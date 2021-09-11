@@ -8,24 +8,37 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import dev.keiji.sample.mastodonclient.Toot
 import dev.keiji.sample.myapplication.TootRepository
+import dev.keiji.sample.myapplication.UserCredential
+import dev.keiji.sample.myapplication.UserCredentialRepository
 import kotlinx.android.synthetic.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class TootListViewModel(
-    instanceUrl: String,
+    private val instanceUrl: String,
+    private val username: String,
     private val coroutineScope: CoroutineScope,
     application: Application
-) : AndroidViewModel(application) , LifecycleObserver{
+) : AndroidViewModel(application), LifecycleObserver {
 
-    private val tootRepository = TootRepository(instanceUrl)
+    private val userCredentialRepository = UserCredentialRepository(
+        application
+    )
+    private lateinit var tootRepository: TootRepository
+    private lateinit var userCredantial: UserCredential
+
     val isLoading = MutableLiveData<Boolean>()
     var hasNext = true
     val tootList = MutableLiveData<ArrayList<Toot>>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        loadNext()
+        coroutineScope.launch {
+            userCredantial = userCredentialRepository
+                .find(instanceUrl, username) ?: return@launch
+            tootRepository = TootRepository(userCredantial)
+            loadNext()
+        }
     }
 
     fun clear() {
@@ -38,9 +51,8 @@ class TootListViewModel(
             isLoading.postValue(true)
             val tootListSnapshot = tootList.value ?: ArrayList()
             val maxId = tootListSnapshot.lastOrNull()?.id
-            val tootListResponse = tootRepository.fetchPubliTimeLine(
-                maxId = maxId,
-                onlyMedia = true
+            val tootListResponse = tootRepository.fetchHomeTimeline(
+                maxId = maxId
             )
             tootListSnapshot.addAll(tootListResponse)
             tootList.postValue(tootListSnapshot)

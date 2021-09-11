@@ -13,7 +13,7 @@ class UserCredentialRepository (
         username: String
     ) : Credential.UserCredential? = withContext(Dispatchers.IO) {
 
-        return@withContext Credential.UserCredential(
+        return@withContext UserCredential(
             BuildConfig.INSTANCE_URL,
             BuildConfig.USERNAME,
             BuildConfig.ACCESS_TOKEN

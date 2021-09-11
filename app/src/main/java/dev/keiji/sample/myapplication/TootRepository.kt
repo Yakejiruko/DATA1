@@ -9,14 +9,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class TootRepository (
-    instanceUrl: String
+    private val userCredantial: UserCredential
 ){
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(instanceUrl)
+        .baseUrl(userCredantial.instanceUrl)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
@@ -32,4 +32,12 @@ class TootRepository (
         )
     }
 
+    suspend fun fetchHomeTimeline (
+        maxId: String?
+    ) = withContext(Dispatchers.IO) {
+        api.fetchPublicTimeline(
+            accessToken = "Bearer ${userCredantial.accessToken}" ,
+            maxId = maxId
+        )
+    }
 }
