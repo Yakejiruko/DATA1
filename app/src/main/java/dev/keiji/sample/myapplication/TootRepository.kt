@@ -35,7 +35,7 @@ class TootRepository (
     suspend fun fetchHomeTimeline (
         maxId: String?
     ) = withContext(Dispatchers.IO) {
-        api.fetchPublicTimeline(
+        api.fetchHomeTimeline(
             accessToken = "Bearer ${userCredantial.accessToken}" ,
             maxId = maxId
         )

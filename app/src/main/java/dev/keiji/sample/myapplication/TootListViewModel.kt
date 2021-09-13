@@ -6,7 +6,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import dev.keiji.sample.mastodonclient.Account
 import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.AccountRepository
 import dev.keiji.sample.myapplication.TootRepository
 import dev.keiji.sample.myapplication.UserCredential
 import dev.keiji.sample.myapplication.UserCredentialRepository
@@ -25,9 +27,11 @@ class TootListViewModel(
         application
     )
     private lateinit var tootRepository: TootRepository
+    private lateinit var accountRepository: AccountRepository
     private lateinit var userCredantial: UserCredential
 
     val isLoading = MutableLiveData<Boolean>()
+    val accountInfo = MutableLiveData<Account>()
     var hasNext = true
     val tootList = MutableLiveData<ArrayList<Toot>>()
 
@@ -37,6 +41,7 @@ class TootListViewModel(
             userCredantial = userCredentialRepository
                 .find(instanceUrl, username) ?: return@launch
             tootRepository = TootRepository(userCredantial)
+            accountRepository = AccountRepository(userCredantial)
             loadNext()
         }
     }
@@ -48,6 +53,7 @@ class TootListViewModel(
 
     fun loadNext() {
         coroutineScope.launch {
+            uppdateAccountInfo()
             isLoading.postValue(true)
             val tootListSnapshot = tootList.value ?: ArrayList()
             val maxId = tootListSnapshot.lastOrNull()?.id
@@ -56,9 +62,14 @@ class TootListViewModel(
             )
             tootListSnapshot.addAll(tootListResponse)
             tootList.postValue(tootListSnapshot)
-
             hasNext = tootListResponse.isNotEmpty()
             isLoading.postValue(false)
         }
+    }
+
+    private suspend fun uppdateAccountInfo() {
+        val accountInfoSnapshot = accountInfo.value
+            ?:accountRepository.verifyAccountCredential()
+        accountInfo.postValue(accountInfoSnapshot)
     }
 }
