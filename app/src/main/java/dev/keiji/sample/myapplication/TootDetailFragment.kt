@@ -9,12 +9,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import dev.keiji.sample.mastodonclient.Toot
-import dev.keiji.sample.mastodonclient.databinding.FragmentTootDetailBinding
 import dev.keiji.sample.myapplication.databinding.FragmentTootDetailBinding
 
 class TootDetailFragment : Fragment(R.layout.fragment_toot_detail) {
     companion object {
         val TAG = TootDetailFragment::class.java.simpleName
+        private const val BUNDLE_KEY_TOOT = "bundle_key_toot"
+        @JvmStatic
+        fun newInstance(toot: Toot): TootDetailFragment {
+            val args = Bundle().apply {
+                putParcelable(BUNDLE_KEY_TOOT, toot)
+            }
+            return TootDetailFragment().apply {
+                arguments = args
+            }
+        }
     }
 
     private var toot: Toot? = null
@@ -25,6 +34,14 @@ class TootDetailFragment : Fragment(R.layout.fragment_toot_detail) {
             lifecycleScope,
             requireContext()
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireArguments().also {
+            toot = it.getParcelable(BUNDLE_KEY_TOOT)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

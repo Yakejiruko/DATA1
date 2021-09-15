@@ -25,7 +25,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class TootListFragment : Fragment(R.layout.fragment_toot_list) {
+class TootListFragment : Fragment(R.layout.fragment_toot_list),
+    TootListAdapter.Callback {
 
     private var binding: FragmentTootListBinding? = null
     private lateinit var adapter: TootListAdapter
@@ -76,7 +77,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
         val tootListSnapshot = viewModel.tootList.value ?: ArrayList<Toot>().also {
             viewModel.tootList.value = it
         }
-        adapter = TootListAdapter(layoutInflater, tootListSnapshot)
+        adapter = TootListAdapter(layoutInflater, tootListSnapshot, this)
         layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
@@ -118,5 +119,13 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding?.unbind()
+    }
+
+    override fun openDetail(toot: Toot) {
+        val fragment = TootDetailFragment.newInstance(toot)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(TootDetailFragment.TAG)
+            .commit()
     }
 }
