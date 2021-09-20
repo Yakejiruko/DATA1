@@ -1,9 +1,13 @@
 package dev.keiji.sample.mastodonclient
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 import dev.keiji.sample.myapplication.Media
 
-data class Toot (
+@Parcelize
+data class Toot
+    (
     val id: String,
     @Json(name = "created_at") val createdAt: String,
     val sensitive: Boolean,
@@ -11,7 +15,7 @@ data class Toot (
     @Json(name = "media_attachments") val mediaAttachments: List<Media>,
     val content: String,
     val account: Account
-) {
+) : Parcelable {
     val topMedia: Media?
         get() = mediaAttachments.firstOrNull()
 }
