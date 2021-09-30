@@ -1,7 +1,6 @@
-package dev.keiji.sample.myapplication
+package dev.keiji.sample.myapplication.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,18 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.keiji.sample.myapplication.databinding.FragmentMainBinding
 import dev.keiji.sample.mastodonclient.Toot
 
-import com.squareup.moshi.Json
 import dev.keiji.sample.mastodonclient.Account
+import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.R
-import dev.keiji.sample.myapplication.MastodonApi
+import dev.keiji.sample.myapplication.TootDetailFragment
 import dev.keiji.sample.myapplication.databinding.FragmentTootListBinding
 import io.keiji.sample.mastodonclient.TootListViewModel
 import io.keiji.sample.mastodonclient.TootListViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
@@ -77,7 +73,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         val tootListSnapshot = viewModel.tootList.value ?: ArrayList<Toot>().also {
             viewModel.tootList.value = it
         }
-        adapter = TootListAdapter(layoutInflater, tootListSnapshot, this)
+        adapter = TootListAdapter(
+            layoutInflater,
+            tootListSnapshot,
+            this
+        )
         layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,

@@ -1,4 +1,4 @@
-package dev.keiji.sample.myapplication
+package dev.keiji.sample.myapplication.entity
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

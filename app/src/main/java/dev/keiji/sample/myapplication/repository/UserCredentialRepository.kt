@@ -1,6 +1,8 @@
-package dev.keiji.sample.myapplication
+package dev.keiji.sample.myapplication.repository
 
 import android.app.Application
+import dev.keiji.sample.myapplication.BuildConfig
+import dev.keiji.sample.myapplication.entity.UserCredential
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

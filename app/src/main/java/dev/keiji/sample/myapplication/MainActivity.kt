@@ -3,7 +3,7 @@ package dev.keiji.sample.myapplication
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import dev.keiji.sample.myapplication.MainFragment
+import dev.keiji.sample.myapplication.ui.TootListFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

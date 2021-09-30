@@ -1,11 +1,11 @@
-package dev.keiji.sample.myapplication
+package dev.keiji.sample.myapplication.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.AdapterListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
 import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.ListItemTootBinding
 
 class TootListAdapter(

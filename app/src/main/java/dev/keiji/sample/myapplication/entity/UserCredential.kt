@@ -1,4 +1,4 @@
-package dev.keiji.sample.myapplication
+package dev.keiji.sample.myapplication.entity
 
 data class UserCredential (
     val instanceUrl: String,

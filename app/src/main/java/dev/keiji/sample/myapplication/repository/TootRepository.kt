@@ -1,8 +1,9 @@
-package dev.keiji.sample.myapplication
+package dev.keiji.sample.myapplication.repository
 
-import android.net.UrlQuerySanitizer
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.keiji.sample.myapplication.MastodonApi
+import dev.keiji.sample.myapplication.entity.UserCredential
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -22,7 +23,7 @@ class TootRepository (
 
     private val api = retrofit.create(MastodonApi::class.java)
 
-    suspend fun fetchPubliTimeLine(
+    suspend fun fetchPublicTimeLine(
         maxId: String?,
         onlyMedia: Boolean
     ) = withContext(Dispatchers.IO) {

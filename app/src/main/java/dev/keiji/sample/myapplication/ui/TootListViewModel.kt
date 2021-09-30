@@ -8,11 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import dev.keiji.sample.mastodonclient.Account
 import dev.keiji.sample.mastodonclient.Toot
-import dev.keiji.sample.myapplication.AccountRepository
-import dev.keiji.sample.myapplication.TootRepository
-import dev.keiji.sample.myapplication.UserCredential
-import dev.keiji.sample.myapplication.UserCredentialRepository
-import kotlinx.android.synthetic.*
+import dev.keiji.sample.myapplication.repository.AccountRepository
+import dev.keiji.sample.myapplication.repository.TootRepository
+import dev.keiji.sample.myapplication.entity.UserCredential
+import dev.keiji.sample.myapplication.repository.UserCredentialRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -23,9 +22,10 @@ class TootListViewModel(
     application: Application
 ) : AndroidViewModel(application), LifecycleObserver {
 
-    private val userCredentialRepository = UserCredentialRepository(
-        application
-    )
+    private val userCredentialRepository =
+        UserCredentialRepository(
+            application
+        )
     private lateinit var tootRepository: TootRepository
     private lateinit var accountRepository: AccountRepository
     private lateinit var userCredantial: UserCredential
@@ -40,8 +40,10 @@ class TootListViewModel(
         coroutineScope.launch {
             userCredantial = userCredentialRepository
                 .find(instanceUrl, username) ?: return@launch
-            tootRepository = TootRepository(userCredantial)
-            accountRepository = AccountRepository(userCredantial)
+            tootRepository =
+                TootRepository(userCredantial)
+            accountRepository =
+                AccountRepository(userCredantial)
             loadNext()
         }
     }

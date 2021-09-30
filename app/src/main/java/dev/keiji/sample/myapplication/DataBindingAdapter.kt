@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import dev.keiji.sample.myapplication.entity.Media
 
 @BindingAdapter("spannedContent")
 fun TextView.setSpannedString(content: String) {
