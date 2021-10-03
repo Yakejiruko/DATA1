@@ -1,4 +1,4 @@
-package dev.keiji.sample.myapplication.ui
+package dev.keiji.sample.myapplication.ui.toot_list
 
 import android.os.Bundle
 import android.view.View
@@ -17,6 +17,9 @@ import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.TootDetailFragment
 import dev.keiji.sample.myapplication.databinding.FragmentTootListBinding
+import dev.keiji.sample.myapplication.ui.TimelineType
+import dev.keiji.sample.myapplication.ui.TootListAdapter
+import dev.keiji.sample.myapplication.ui.toot_detail.TootDetailActivity
 import io.keiji.sample.mastodonclient.TootListViewModel
 import io.keiji.sample.mastodonclient.TootListViewModelFactory
 
@@ -146,10 +149,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
     }
 
     override fun openDetail(toot: Toot) {
-        val fragment = TootDetailFragment.newInstance(toot)
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(TootDetailFragment.TAG)
-            .commit()
+        val intent = TootDetailActivity.newIntent(requireContext(), toot)
+        startActivity(intent)
     }
 }
