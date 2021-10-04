@@ -30,7 +30,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
     private var binding: FragmentTootListBinding? = null
     private lateinit var adapter: TootListAdapter
     private lateinit var layoutManager: LinearLayoutManager
-    private val timelineType = TimelineType.PublicTimeline
+    private var timelineType = TimelineType.PublicTimeline
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

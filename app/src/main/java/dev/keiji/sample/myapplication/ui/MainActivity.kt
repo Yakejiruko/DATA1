@@ -3,10 +3,7 @@ package dev.keiji.sample.myapplication.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import dev.keiji.sample.mastodonclient.ui.toot_list.TimelineType
 import androidx.databinding.DataBindingUtil
-import dev.keiji.sample.mastodonclient.R
-import dev.keiji.sample.mastodonclient.databinding.ActivityMainBinding
 import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.ActivityMainBinding
 import dev.keiji.sample.myapplication.ui.toot_list.TootListFragment
