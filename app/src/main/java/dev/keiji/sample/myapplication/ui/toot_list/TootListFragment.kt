@@ -16,6 +16,7 @@ import dev.keiji.sample.mastodonclient.Account
 import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.TootDetailFragment
+import dev.keiji.sample.myapplication.ui.toot_edit.TootEditActivity
 import dev.keiji.sample.myapplication.databinding.FragmentTootListBinding
 import dev.keiji.sample.myapplication.ui.TimelineType
 import dev.keiji.sample.myapplication.ui.TootListAdapter
@@ -123,6 +124,10 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
             viewModel.loadNext()
         }
 
+        bindingData.fab.setOnClickListener{
+            launchTootEditActivity()
+        }
+
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding?.swipeRefreshLayout?.isRefreshing = it
         })
@@ -134,6 +139,11 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         })
 
         viewLifecycleOwner.lifecycle.addObserver(viewModel)
+    }
+
+    private fun launchTootEditActivity() {
+        val intent = TootEditActivity.newIntent(requireContext())
+        startActivity(intent)
     }
 
     private fun showAccountInfo(accountInfo: Account) {
