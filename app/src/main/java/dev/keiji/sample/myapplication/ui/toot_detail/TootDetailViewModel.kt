@@ -17,13 +17,3 @@ class TootDetailViewModel (
     }
 }
 
-class TootDetailViewModel (
-    private val tootData: Toot?,
-    private val coroutineScope: CoroutineScope,
-    application: Application
-) : AndroidViewModel(application) {
-
-    val toot = MutableLiveData<Toot>().also {
-        it.value = tootData
-    }
-}

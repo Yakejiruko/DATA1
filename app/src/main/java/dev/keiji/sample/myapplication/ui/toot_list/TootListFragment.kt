@@ -1,5 +1,6 @@
 package dev.keiji.sample.myapplication.ui.toot_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -142,7 +143,7 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
     }
 
     private fun launchTootEditActivity() {
-        val intent = TootEditActivity.newIntent(requireContext())
+        val intent = Intent(requireContext(),TootEditActivity::class.java)
         startActivity(intent)
     }
 

@@ -2,8 +2,11 @@ package dev.keiji.sample.myapplication
 
 import dev.keiji.sample.mastodonclient.Account
 import dev.keiji.sample.mastodonclient.Toot
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface MastodonApi {
@@ -25,4 +28,11 @@ interface MastodonApi {
     suspend fun verifyAccountCredential(
         @Header("Authorization") accessToken: String
     ): Account
+
+    @FormUrlEncoded
+    @POST("api/vl/statuses")
+    suspend fun postToot(
+        @Header("Authorization") accessToken: String,
+        @Field("statuses") status: String
+    ) : Toot
 }
