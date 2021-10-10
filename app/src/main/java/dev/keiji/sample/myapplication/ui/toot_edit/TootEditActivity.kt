@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dev.keiji.sample.myapplication.R
+import android.app.Activity
 
-class TootEditActivity : AppCompatActivity() {
+class TootEditActivity : AppCompatActivity(),
+    TootEditFragment.Callback {
     companion object {
         val TAG = TootEditActivity::class.java.simpleName
-        fun newInstance(context: Context): Intent {
+        fun newIntent(context: Context): Intent {
             return Intent(context, TootEditActivity::class.java)
         }
     }
@@ -24,5 +26,10 @@ class TootEditActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, fragment, TootEditFragment.TAG)
                 .commit()
         }
+    }
+
+    override fun onPostComplete() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 }
