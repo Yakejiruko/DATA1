@@ -65,7 +65,7 @@ class TootEditFragment : Fragment(R.layout.fragment_toot_edit) {
             callback?.onPostComplete()
         })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(view, it, Snackbar, LENGTH_LONG).show()
+            Snackbar.make(view, it, Snackbar.LENGTH_LONG).show()
         })
     }
 
