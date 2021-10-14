@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.keiji.sample.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ui.toot_detail.TootDetailActivity" />
-        <activity android:name=".ui.toot_edit.TootEditActivity"  />
+        <activity android:name=".ui.toot_detail.TootDetailActivity" />
+        <activity
+            android:name=".ui.toot_edit.TootEditActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

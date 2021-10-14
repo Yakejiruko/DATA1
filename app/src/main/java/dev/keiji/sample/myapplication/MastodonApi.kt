@@ -2,11 +2,13 @@ package dev.keiji.sample.myapplication
 
 import dev.keiji.sample.mastodonclient.Account
 import dev.keiji.sample.mastodonclient.Toot
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MastodonApi {
@@ -34,5 +36,11 @@ interface MastodonApi {
     suspend fun postToot(
         @Header("Authorization") accessToken: String,
         @Field("statuses") status: String
-    ) : Toot
+    ): Toot
+
+    @DELETE("api/vl/status/{id}")
+    suspend fun deleteToot(
+        @Header("Authorization") accessToken: String,
+        @Path("id") id: String
+    )
 }

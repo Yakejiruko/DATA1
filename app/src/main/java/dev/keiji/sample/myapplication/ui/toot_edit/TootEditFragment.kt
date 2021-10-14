@@ -10,17 +10,19 @@ import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.FragmentTootEditBinding
 import android.content.Context
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import dev.keiji.sample.myapplication.ui.login.LoginActivity
 
 class TootEditFragment : Fragment(R.layout.fragment_toot_edit) {
     companion object {
         val TAG = TootEditFragment::class.java.simpleName
+        private const val REQUEST_CODE_LOGIN = 0x01
         fun newInstance(): TootEditFragment {
             return TootEditFragment()
         }
@@ -60,6 +62,12 @@ class TootEditFragment : Fragment(R.layout.fragment_toot_edit) {
         bindingData.lifecycleOwner = viewLifecycleOwner
         bindingData.viewModel = viewModel
 
+        viewModel.loginRequired.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                launchLoginActivity()
+            }
+        })
+
         viewModel.postComplete.observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), "投稿完了しました", Toast.LENGTH_LONG).show()
             callback?.onPostComplete()
@@ -83,6 +91,11 @@ class TootEditFragment : Fragment(R.layout.fragment_toot_edit) {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun launchLoginActivity() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE_LOGIN)
     }
 
     override fun onDestroyView() {

@@ -18,7 +18,7 @@ class TootEditViewModel (
         application
     )
     val status = MutableLiveData<String>()
-
+    val loginRequired = MutableLiveData<Boolean>()
     val postComplete = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     fun postToot() {
@@ -31,6 +31,7 @@ class TootEditViewModel (
         coroutineScope.launch {
             val credential = userCredentialRepository.find(instanceUrl, username)
             if (credential == null) {
+                loginRequired.postValue(true)
                 return@launch
             }
             val tootRepository = TootRepository(credential)
