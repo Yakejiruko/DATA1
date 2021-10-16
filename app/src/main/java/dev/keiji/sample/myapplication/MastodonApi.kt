@@ -1,6 +1,7 @@
 package dev.keiji.sample.myapplication
 
-import dev.keiji.sample.mastodonclient.Account
+import android.accounts.Account
+import dev.keiji.sample.myapplication.entity.ResponseToken
 import dev.keiji.sample.mastodonclient.Toot
 import retrofit2.http.DELETE
 import retrofit2.http.Field

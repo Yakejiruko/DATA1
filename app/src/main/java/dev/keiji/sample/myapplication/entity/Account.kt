@@ -1,14 +1,13 @@
+package dev.keiji.sample.myapplication.entity
 
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="AndroidLayouts">
-    <shared>
-      <config />
-    </shared>
-  </component>
-  <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Firebase" />
-  </component>
-  <component name="ChangeListManager">
-    <list
+@Parcelize
+data class Account (
+    val id: String,
+    val username: String,
+    @Json(name = "display_name") val displayName: String,
+    val url:String
+) : Parcelable
