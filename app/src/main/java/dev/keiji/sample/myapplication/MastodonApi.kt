@@ -1,8 +1,8 @@
 package dev.keiji.sample.myapplication
 
-import android.accounts.Account
+import dev.keiji.sample.myapplication.entity.Account
 import dev.keiji.sample.myapplication.entity.ResponseToken
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

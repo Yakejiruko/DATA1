@@ -48,4 +48,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private class InnerWebViewClient : WebViewClient() {
     }
+    private val onObtainCode = fun (code: String) {
+        viewModel.requestAccessToken(
+            BuildConfig.CLIENT_KEY,
+            BuildConfig.CLIENT_SECRET,
+            BuildConfig.CLIENT_REDIRECT_URI,
+            BuildConfig.CLIENT_SCOPES,
+            code
+        )
+    }
 }
