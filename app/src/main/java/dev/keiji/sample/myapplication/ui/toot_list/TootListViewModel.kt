@@ -1,4 +1,4 @@
-package io.keiji.sample.mastodonclient
+package io.keiji.sample.myapplication
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
-import dev.keiji.sample.mastodonclient.Account
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Account
+import dev.keiji.sample.myapplication.entity.Toot
 import dev.keiji.sample.myapplication.repository.AccountRepository
 import dev.keiji.sample.myapplication.repository.TootRepository
 import dev.keiji.sample.myapplication.entity.UserCredential
@@ -40,19 +40,7 @@ class TootListViewModel(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        coroutineScope.launch {
-            val credential = userCredentialRepository.find(instanceUrl, username)
-            if (credential == null) {
-                loginRequired.postValue(true)
-                return@launch
-            }
-
-            tootRepository = TootRepository(credential)
-            accountRepository = AccountRepository(credential)
-            userCredential = credential
-
-            loadNext()
-        }
+        reloadUserCredential()
     }
 
     fun clear() {
@@ -98,6 +86,24 @@ class TootListViewModel(
             val tootListSnapshot = tootList.value
             tootListSnapshot?.remove(toot)
             tootList.postValue(tootListSnapshot)
+        }
+    }
+
+    fun reloadUserCredential() {
+        coroutineScope.launch {
+            val credential = userCredentialRepository
+                .find(instanceUrl, username)
+            if (credential == null) {
+                loginRequired.postValue(true)
+                return@launch
+            }
+
+            tootRepository = TootRepository(credential)
+            accountRepository = AccountRepository(credential)
+            userCredential = credential
+
+            clear()
+            loadNext()
         }
     }
 }

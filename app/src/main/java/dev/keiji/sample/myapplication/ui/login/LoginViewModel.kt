@@ -5,6 +5,7 @@ import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import dev.keiji.sample.myapplication.entity.UserCredential
 import dev.keiji.sample.myapplication.repository.TootRepository
 import dev.keiji.sample.myapplication.repository.UserCredentialRepository
 import dev.keiji.sample.myapplication.ui.repository.AuthRepository
@@ -22,6 +23,10 @@ class LoginViewModel(
     }
 
     private val authRepository = AuthRepository(instanceUrl)
+    private val userCredentialRepository = UserCredentialRepository(
+        application
+    )
+    val accessTokenSaved = MutableLiveData<UserCredential>()
 
     fun requestAccessToken(
         clientID: String,
@@ -41,6 +46,12 @@ class LoginViewModel(
             )
 
             Log.d(TAG, responseToken.accessToken)
+            val userCredential = UserCredential(
+                instanceUrl = instanceUrl,
+                accessToken = responseToken.accessToken
+            )
+            userCredentialRepository.set(userCredential)
+            accessTokenSaved.postValue(userCredential)
         }
     }
 }

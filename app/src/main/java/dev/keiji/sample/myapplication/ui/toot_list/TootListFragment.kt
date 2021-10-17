@@ -3,6 +3,7 @@ package dev.keiji.sample.myapplication.ui.toot_list
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,9 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 
-import dev.keiji.sample.mastodonclient.Account
+import dev.keiji.sample.myapplication.entity.Account
 import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.TootDetailFragment
@@ -24,8 +25,8 @@ import dev.keiji.sample.myapplication.ui.TimelineType
 import dev.keiji.sample.myapplication.ui.TootListAdapter
 import dev.keiji.sample.myapplication.ui.login.LoginActivity
 import dev.keiji.sample.myapplication.ui.toot_detail.TootDetailActivity
-import io.keiji.sample.mastodonclient.TootListViewModel
 import io.keiji.sample.mastodonclient.TootListViewModelFactory
+import io.keiji.sample.myapplication.TootListViewModel
 
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
@@ -174,6 +175,24 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
         if (requestCode == REQUEST_CODE_TOOT_EDIT && resultCode == Activity.RESULT_OK) {
             viewModel.clear()
             viewModel.loadNext()
+        }
+
+        if (requestCode == REQUEST_CODE_LOGIN) {
+            handleLoginActivityResult(resultCode)
+        }
+    }
+
+    private fun handleLoginActivityResult(resultCode: Int) {
+        when (resultCode) {
+            Activity.RESULT_OK -> viewModel.reloadUserCredential()
+            else -> {
+                Toast.makeText(
+                    requireContext(),
+                    "ログインが完了しませんでした",
+                    Toast.LENGTH_LONG
+                ).show()
+                requireActivity().finish()
+            }
         }
     }
 
