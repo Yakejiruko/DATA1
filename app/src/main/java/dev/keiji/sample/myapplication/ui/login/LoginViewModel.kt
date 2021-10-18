@@ -29,7 +29,7 @@ class LoginViewModel(
     val accessTokenSaved = MutableLiveData<UserCredential>()
 
     fun requestAccessToken(
-        clientID: String,
+        clientId: String,
         clientSecret: String,
         redirectUri: String,
         scopes: String,
@@ -38,7 +38,7 @@ class LoginViewModel(
         coroutineScope.launch {
             val responseToken = authRepository.token(
                 instanceUrl,
-                clientID,
+                clientId,
                 clientSecret,
                 redirectUri,
                 scopes,

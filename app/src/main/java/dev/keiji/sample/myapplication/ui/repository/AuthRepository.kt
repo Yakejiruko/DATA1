@@ -24,12 +24,12 @@ class AuthRepository(
     suspend fun token(
         clientId: String,
         clientSecret: String,
-        redirectUrl: String,
+        redirectUri: String,
         scopes: String,
         code: String
     ): ResponseToken = withContext(Dispatchers.IO) {
         return@withContext api.token(
-            clientID,
+            clientId,
             clientSecret,
             redirectUri,
             scopes,
