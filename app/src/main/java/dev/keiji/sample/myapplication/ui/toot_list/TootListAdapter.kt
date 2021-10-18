@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import dev.keiji.sample.myapplication.R
 import dev.keiji.sample.myapplication.databinding.ListItemTootBinding
 

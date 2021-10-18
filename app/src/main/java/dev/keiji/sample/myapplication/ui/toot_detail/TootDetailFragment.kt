@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import dev.keiji.sample.myapplication.databinding.FragmentTootDetailBinding
 
 

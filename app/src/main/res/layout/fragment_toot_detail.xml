@@ -7,7 +7,7 @@
 
 		<variable
 			name="toot"
-			type="dev.keiji.sample.mastodonclient.Toot" />>
+			type="dev.keiji.sample.myapplication.entity.Toot" />>
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout

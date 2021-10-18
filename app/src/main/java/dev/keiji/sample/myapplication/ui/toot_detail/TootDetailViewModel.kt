@@ -3,7 +3,7 @@ package dev.keiji.sample.myapplication
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import kotlinx.coroutines.CoroutineScope
 
 class TootDetailViewModel (

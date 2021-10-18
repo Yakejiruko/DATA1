@@ -15,7 +15,7 @@ import dev.keiji.sample.myapplication.databinding.FragmentMainBinding
 import retrofit2.Retrofit
 import android.util.Log
 import com.squareup.moshi.Moshi
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import dev.keiji.sample.myapplication.MastodonApi
 import kotlinx.coroutines.launch
 import retrofit2.converter.moshi.MoshiConverterFactory

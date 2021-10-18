@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import kotlinx.coroutines.CoroutineScope
 
 class TootDetailViewModelFactory(

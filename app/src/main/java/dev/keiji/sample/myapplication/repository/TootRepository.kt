@@ -2,7 +2,7 @@ package dev.keiji.sample.myapplication.repository
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.keiji.sample.mastodonclient.Toot
+import dev.keiji.sample.myapplication.entity.Toot
 import dev.keiji.sample.myapplication.MastodonApi
 import dev.keiji.sample.myapplication.entity.UserCredential
 import kotlinx.coroutines.Dispatchers

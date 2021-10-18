@@ -1,6 +1,7 @@
 package dev.keiji.sample.myapplication.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,20 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login),
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent ?:return
+
+        val code = intent.data?.getQueryParameter("code") ?:return
+        val loginFragment = supportFragmentManager.findFragmentByTag(LoginFragment.TAG)
+        if(loginFragment is LoginFragment) {
+            loginFragment.requestAccessToken(code)
+        }
+    }
+
     override fun onAuthComplete() {
         Toast.makeText(this, "ログイン完了しました", Toast.LENGTH_LONG).show()
-        setResult(Activity, Activity.RESULT_OK)
+        setResult(Activity.RESULT_OK)
         finish()
     }
 }

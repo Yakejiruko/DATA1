@@ -25,18 +25,18 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan">
 
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-            <category android:name="android.intent.category.DEDAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-            <data
-                android:host="${applicationId}"
-                android:scheme="auth" />
-        </intent-filter>
+                <data
+                    android:host="${applicationId}"
+                    android:scheme="auth" />
+            </intent-filter>
+        </activity>
     </application>
-
 </manifest>
