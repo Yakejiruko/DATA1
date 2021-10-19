@@ -18,7 +18,6 @@ import dev.keiji.sample.myapplication.entity.Toot
 import dev.keiji.sample.myapplication.entity.Account
 import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.R
-import dev.keiji.sample.myapplication.TootDetailFragment
 import dev.keiji.sample.myapplication.ui.toot_edit.TootEditActivity
 import dev.keiji.sample.myapplication.databinding.FragmentTootListBinding
 import dev.keiji.sample.myapplication.ui.TimelineType

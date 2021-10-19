@@ -1,12 +1,10 @@
 package dev.keiji.sample.myapplication.ui.login
 
 import android.app.Application
-import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import dev.keiji.sample.myapplication.entity.UserCredential
-import dev.keiji.sample.myapplication.repository.TootRepository
 import dev.keiji.sample.myapplication.repository.UserCredentialRepository
 import dev.keiji.sample.myapplication.ui.repository.AuthRepository
 import kotlinx.coroutines.CoroutineScope
