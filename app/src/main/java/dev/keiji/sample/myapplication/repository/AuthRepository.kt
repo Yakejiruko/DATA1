@@ -1,4 +1,4 @@
-package dev.keiji.sample.myapplication.ui.repository
+package dev.keiji.sample.myapplication.repository
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

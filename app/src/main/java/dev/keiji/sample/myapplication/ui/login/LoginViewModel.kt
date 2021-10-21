@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import dev.keiji.sample.myapplication.entity.UserCredential
 import dev.keiji.sample.myapplication.repository.UserCredentialRepository
-import dev.keiji.sample.myapplication.ui.repository.AuthRepository
+import dev.keiji.sample.myapplication.repository.AuthRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -20,7 +20,8 @@ class LoginViewModel(
         private val TAG = AndroidViewModel::class.java.simpleName
     }
 
-    private val authRepository = AuthRepository(instanceUrl)
+    private val authRepository =
+        AuthRepository(instanceUrl)
     private val userCredentialRepository = UserCredentialRepository(
         application
     )
@@ -35,7 +36,6 @@ class LoginViewModel(
     ) {
         coroutineScope.launch {
             val responseToken = authRepository.token(
-                instanceUrl,
                 clientId,
                 clientSecret,
                 redirectUri,

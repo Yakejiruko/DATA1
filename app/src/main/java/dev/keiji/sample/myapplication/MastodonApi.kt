@@ -33,15 +33,26 @@ interface MastodonApi {
     ): Account
 
     @FormUrlEncoded
-    @POST("api/vl/statuses")
+    @POST("api/v1/statuses")
     suspend fun postToot(
         @Header("Authorization") accessToken: String,
         @Field("statuses") status: String
     ): Toot
 
-    @DELETE("api/vl/status/{id}")
+    @DELETE("api/v1/status/{id}")
     suspend fun deleteToot(
         @Header("Authorization") accessToken: String,
         @Path("id") id: String
     )
+
+    @FormUrlEncode
+    @POST("oauth/token")
+    suspend fun  token(
+        @Filed("client_id") clientId:String,
+        @Filed("client_secret") clientSecret:String,
+        @Filed("redirect_uri") redirectUri:String,
+        @Filed("scope") scope:String,
+        @Filed("code") code:String,
+        @Filed("grant_type") grantType:String
+    ) : ResponceToken
 }
