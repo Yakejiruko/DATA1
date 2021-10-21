@@ -3,7 +3,7 @@ package dev.keiji.sample.myapplication.repository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.keiji.sample.myapplication.MastodonApi
-import dev.keiji.sample.myapplication.entity.ResponseToken
+import dev.keiji.sample.myapplication.entity.ResponceToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -27,7 +27,7 @@ class AuthRepository(
         redirectUri: String,
         scopes: String,
         code: String
-    ): ResponseToken = withContext(Dispatchers.IO) {
+    ): ResponceToken = withContext(Dispatchers.IO) {
         return@withContext api.token(
             clientId,
             clientSecret,

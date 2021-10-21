@@ -1,7 +1,7 @@
 package dev.keiji.sample.myapplication
 
 import dev.keiji.sample.myapplication.entity.Account
-import dev.keiji.sample.myapplication.entity.ResponseToken
+import dev.keiji.sample.myapplication.entity.ResponceToken
 import dev.keiji.sample.myapplication.entity.Toot
 import retrofit2.http.DELETE
 import retrofit2.http.Field
@@ -45,14 +45,14 @@ interface MastodonApi {
         @Path("id") id: String
     )
 
-    @FormUrlEncode
+    @FormUrlEncoded
     @POST("oauth/token")
     suspend fun  token(
-        @Filed("client_id") clientId:String,
-        @Filed("client_secret") clientSecret:String,
-        @Filed("redirect_uri") redirectUri:String,
-        @Filed("scope") scope:String,
-        @Filed("code") code:String,
-        @Filed("grant_type") grantType:String
+        @Field("client_id") clientId:String,
+        @Field("client_secret") clientSecret:String,
+        @Field("redirect_uri") redirectUri:String,
+        @Field("scope") scope:String,
+        @Field("code") code:String,
+        @Field("grant_type") grantType:String
     ) : ResponceToken
 }

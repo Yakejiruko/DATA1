@@ -3,7 +3,6 @@ package dev.keiji.sample.myapplication.entity
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
-import dev.keiji.sample.myapplication.entity.Media
 
 @Parcelize
 data class Toot

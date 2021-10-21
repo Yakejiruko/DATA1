@@ -9,5 +9,5 @@ data class Media (
     val id: String,
     val type: String,
     val url: String,
-    @Json(name = "preview_url") val previewUrl: String
-) : Parcelable
+    @Json(name="preview_url") val previewUrl: String
+    ): Parcelable
