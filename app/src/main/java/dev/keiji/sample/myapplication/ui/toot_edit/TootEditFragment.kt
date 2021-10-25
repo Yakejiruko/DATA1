@@ -83,7 +83,6 @@ class TootEditFragment : Fragment(R.layout.fragment_toot_edit) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
         return when (item.itemId) {
             R.id.menu_post -> {
                 viewModel.postToot()

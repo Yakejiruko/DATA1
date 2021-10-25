@@ -15,6 +15,8 @@ import dev.keiji.sample.myapplication.repository.UserCredentialRepository
 import dev.keiji.sample.myapplication.ui.TimelineType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.net.HttpURLConnection
 
 class TootListViewModel(
     private val instanceUrl: String,
@@ -34,6 +36,7 @@ class TootListViewModel(
 
     val loginRequired = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
+    val errorMessage = MutableLiveData<String>()
     val accountInfo = MutableLiveData<Account>()
     var hasNext = true
     val tootList = MutableLiveData<ArrayList<Toot>>()
@@ -54,56 +57,91 @@ class TootListViewModel(
             isLoading.postValue(true)
             val tootListSnapshot = tootList.value ?: ArrayList()
             val maxId = tootListSnapshot.lastOrNull()?.id
-            val tootListResponse = when (timelineType) {
-                TimelineType.PublicTimeline -> {
-                    tootRepository.fetchPublicTimeLine(
-                        maxId = maxId,
-                        onlyMedia = true
-                    )
+            try {
+                val tootListRespnse = when (timelineType) {
+                    TimelineType.PublicTimeline -> {
+                        tootRepository.fetchPublicTimeLine(
+                            maxId = maxId,
+                            onlyMedia = true
+                        )
+                    }
+                    TimelineType.HomeTimeline -> {
+                        tootRepository.fetchHomeTimeline(
+                            maxId = maxId
+                        )
+                    }
                 }
-                TimelineType.HomeTimeline -> {
-                    tootRepository.fetchHomeTimeline(
-                        maxId = maxId
-                    )
+
+                tootListSnapshot.addAll(tootListRespnse)
+                tootList.postValue(tootListSnapshot)
+                hasNext = tootListRespnse.isNotEmpty()
+            } catch (e: HttpException) {
+                when (e.code()) {
+                    HttpURLConnection.HTTP_FORBIDDEN -> {
+                        errorMessage.postValue("必要な権限がありません")
+                    }
                 }
+            } finally {
+                isLoading.postValue(false)
             }
-            tootListSnapshot.addAll(tootListResponse)
-            tootList.postValue(tootListSnapshot)
-            hasNext = tootListResponse.isNotEmpty()
-            isLoading.postValue(false)
         }
     }
 
-    private suspend fun uppdateAccountInfo() {
+
+    tootListSnapshot.addAll(tootListResponse)
+    tootList.postValue(tootListSnapshot)
+    hasNext = tootListResponse.isNotEmpty()
+    isLoading.postValue(false)
+}
+}
+
+private suspend fun uppdateAccountInfo() {
+    try {
         val accountInfoSnapshot = accountInfo.value
             ?: accountRepository.verifyAccountCredential()
         accountInfo.postValue(accountInfoSnapshot)
+    } catch (e: HttpException) {
+        when (e.code()) {
+            HttpURLConnection.HTTP_FORBIDDEN -> {
+                errorMessage.postValue("必要な権限がありません")
+            }
+        }
     }
+}
 
-    fun delete(toot: Toot) {
-        coroutineScope.launch {
+fun delete(toot: Toot) {
+    coroutineScope.launch {
+        try {
             tootRepository.delete(toot.id)
             val tootListSnapshot = tootList.value
             tootListSnapshot?.remove(toot)
             tootList.postValue(tootListSnapshot)
-        }
-    }
-
-    fun reloadUserCredential() {
-        coroutineScope.launch {
-            val credential = userCredentialRepository
-                .find(instanceUrl, username)
-            if (credential == null) {
-                loginRequired.postValue(true)
-                return@launch
+        } catch (e: HttpException) {
+            when (e.code()) {
+                HttpURLConnection.HTTP_FORBIDDEN -> {
+                    errorMessage.postValue("必要な権限がありません")
+                }
             }
-
-            tootRepository = TootRepository(credential)
-            accountRepository = AccountRepository(credential)
-            userCredential = credential
-
-            clear()
-            loadNext()
         }
     }
+}
+
+
+fun reloadUserCredential() {
+    coroutineScope.launch {
+        val credential = userCredentialRepository
+            .find(instanceUrl, username)
+        if (credential == null) {
+            loginRequired.postValue(true)
+            return@launch
+        }
+
+        tootRepository = TootRepository(credential)
+        accountRepository = AccountRepository(credential)
+        userCredential = credential
+
+        clear()
+        loadNext()
+    }
+}
 }
