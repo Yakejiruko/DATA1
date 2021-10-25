@@ -11,10 +11,10 @@ class MediaListAdapter (
     private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<MediaListAdapter.ViewHolder>() {
     var mediaList: List<Media> = emptyList()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getItemCount() = mediaList.size
 
@@ -35,7 +35,7 @@ class MediaListAdapter (
         holder: ViewHolder,
         position: Int
     ) {
-       holder.bind(mediaList[position])
+        holder.bind(mediaList[position])
     }
 
     class ViewHolder (
