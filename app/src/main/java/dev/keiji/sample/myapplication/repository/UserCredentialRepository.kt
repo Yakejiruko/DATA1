@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import androidx.core.content.edit
-import dev.keiji.sample.myapplication.BuildConfig
 import dev.keiji.sample.myapplication.entity.UserCredential
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

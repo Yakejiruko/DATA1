@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dev.keiji.sample.myapplication.entity.Toot
 
 import dev.keiji.sample.myapplication.entity.Account
@@ -24,8 +25,8 @@ import dev.keiji.sample.myapplication.ui.TimelineType
 import dev.keiji.sample.myapplication.ui.TootListAdapter
 import dev.keiji.sample.myapplication.ui.login.LoginActivity
 import dev.keiji.sample.myapplication.ui.toot_detail.TootDetailActivity
+import dev.keiji.sample.myapplication.TootListViewModel
 import io.keiji.sample.mastodonclient.TootListViewModelFactory
-import io.keiji.sample.myapplication.TootListViewModel
 
 
 class TootListFragment : Fragment(R.layout.fragment_toot_list),
@@ -141,6 +142,10 @@ class TootListFragment : Fragment(R.layout.fragment_toot_list),
 
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding?.swipeRefreshLayout?.isRefreshing = it
+        })
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(bindingData.swipeRefreshLayout,it,Snackbar.LENGTH_LONG)
+                .show()
         })
         viewModel.accountInfo.observe(viewLifecycleOwner, Observer {
             showAccountInfo(it)

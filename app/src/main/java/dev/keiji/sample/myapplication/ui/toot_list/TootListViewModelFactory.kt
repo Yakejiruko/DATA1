@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dev.keiji.sample.myapplication.ui.TimelineType
-import io.keiji.sample.myapplication.TootListViewModel
+import dev.keiji.sample.myapplication.TootListViewModel
 import kotlinx.coroutines.CoroutineScope
 
 class TootListViewModelFactory(
