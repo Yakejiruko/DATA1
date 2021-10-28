@@ -36,10 +36,10 @@ interface MastodonApi {
     @POST("api/v1/statuses")
     suspend fun postToot(
         @Header("Authorization") accessToken: String,
-        @Field("statuses") status: String
+        @Field("status") status: String
     ): Toot
 
-    @DELETE("api/v1/status/{id}")
+    @DELETE("api/v1/statuses/{id}")
     suspend fun deleteToot(
         @Header("Authorization") accessToken: String,
         @Path("id") id: String

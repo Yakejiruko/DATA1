@@ -95,7 +95,7 @@ class TootListViewModel(
     private suspend fun updateAccountInfo() {
         try {
             val accountInfoSnapshot = accountInfo.value
-                ?: AccountRepository.verifyAccountCredential()
+                ?: accountRepository.verifyAccountCredential()
             accountInfo.postValue(accountInfoSnapshot)
         } catch (e: HttpException) {
             when (e.code()) {
